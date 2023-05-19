@@ -124,12 +124,6 @@ class IQLCritic(BaseCritic):
         # HINT: Note that if the next state is terminal, 
         # its target reward value needs to be adjusted.
         ### YOUR CODE HERE ###
-
-        '''
-        loss = ((reward_n + self.gamma * self.v_net(next_ob_no).squeeze(1) * (1 - terminal_n) - \
-                self.q_net(ob_no).gather(1, ac_na.unsqueeze(1)).squeeze(1)) ** 2).mean()
-        
-        '''
         q_pred = self.q_net(ob_no).gather(1, ac_na.unsqueeze(1)).squeeze(1)
         with torch.no_grad():
             target_q_values = reward_n + (1 - terminal_n) * self.gamma * self.v_net(next_ob_no).squeeze(1)
